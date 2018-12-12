@@ -2,15 +2,9 @@
 
 Exploring BLOC pattern
 
-## Getting Started
+# Based on articles:
+https://medium.com/flutterpub/architecting-your-flutter-project-bd04e144a8f1
+https://medium.com/flutterpub/architect-your-flutter-project-using-bloc-pattern-part-2-d8dd1eca9ba5
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.io/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.io/docs/cookbook)
-
-For help getting started with Flutter, view our 
-[online documentation](https://flutter.io/docs), which offers tutorials, 
-samples, guidance on mobile development, and a full API reference.
+https://www.didierboelens.com/2018/08/reactive-programming---streams---bloc/
+https://medium.com/flutterpub/exploring-streams-in-flutter-4732e5524dd8
