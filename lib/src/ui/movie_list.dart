@@ -3,11 +3,16 @@ import 'package:flutter/material.dart';
 
 import '../blocs/movies_bloc.dart';
 
-class MovieList extends StatelessWidget {
+class MovieList extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return MovieListState();
+  }
+}
+
+class MovieListState extends State<MovieList> {
   @override
   Widget build(BuildContext context) {
-    bloc.fetchAllMovies();
-
     return Scaffold(
       appBar: AppBar(
         title: Text('Popular Movies'),
@@ -41,4 +46,20 @@ class MovieList extends StatelessWidget {
       },
     );
   }
+
+  @override
+  void initState() {
+    super.initState();
+    bloc.fetchAllMovies();
+  }
+
+  @override
+  void dispose() {
+    bloc.dispose();
+    super.dispose();
+  }
 }
+
+//class MovieList extends StatelessWidget {
+
+//}
