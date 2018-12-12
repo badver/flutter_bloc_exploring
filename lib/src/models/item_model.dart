@@ -9,12 +9,7 @@ class ItemModel {
     _page = parsedJson['page'];
     _totalPages = parsedJson['total_results'];
     _totalPages = parsedJson['total_pages'];
-    List<_Result> temp = [];
-    for (int i = 0; i < parsedJson['results'].length; i++) {
-      _Result result = _Result(parsedJson['results'][i]);
-      temp.add(result);
-    }
-    _results = temp;
+    _results = parsedJson['results'].map<_Result>((item) => _Result(item)).toList();
   }
 
   List<_Result> get results => _results;
