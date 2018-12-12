@@ -76,7 +76,7 @@ class _Result {
 
   String get title => _title;
 
-  get voteAverage => _voteAverage;
+  get voteAverage => _voteAverage.toString();
 
   bool get video => _video;
 
