@@ -18,7 +18,7 @@ class MovieApiProvider {
     throw Exception('Failed to load data');
   }
 
-  fetchTrailer(int movieId) async {
+  Future<TrailerModel> fetchTrailer(int movieId) async {
     final response =
         await client.get("$_baseUrl/$movieId/videos?api_key=$_apiKey");
     if (response.statusCode == 200) {

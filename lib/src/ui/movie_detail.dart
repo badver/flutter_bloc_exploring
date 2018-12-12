@@ -1,3 +1,5 @@
+import 'package:bloc_study/src/blocs/movie_detail_bloc_provider.dart';
+import 'package:bloc_study/src/models/trailer_model.dart';
 import 'package:flutter/material.dart';
 
 class MovieDetail extends StatefulWidget {
@@ -36,6 +38,8 @@ class MovieDetailState extends State<MovieDetail> {
   final String voteAverage;
   final int movieId;
 
+  MovieDetailBloc bloc;
+
   MovieDetailState(
       {this.title,
       this.posterUrl,
@@ -43,6 +47,19 @@ class MovieDetailState extends State<MovieDetail> {
       this.releaseDate,
       this.voteAverage,
       this.movieId});
+
+  @override
+  void dispose() {
+    bloc.dispose();
+    super.dispose();
+  }
+
+  @override
+  void didChangeDependencies() {
+    bloc = MovieDetailBlocProvider.of(context);
+    bloc.fetchTrailersById(movieId);
+    super.didChangeDependencies();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -80,6 +97,29 @@ class MovieDetailState extends State<MovieDetail> {
                       style: TextStyle(
                           fontSize: 25.0, fontWeight: FontWeight.bold)),
                   Container(margin: EdgeInsets.symmetric(vertical: 8.0)),
+                  StreamBuilder(
+                      stream: bloc.movieTrailers,
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          return FutureBuilder(
+                            future: snapshot.data,
+                            builder: (context, itemSnapShot) {
+                              if (itemSnapShot.hasData) {
+                                if (itemSnapShot.data.results.length > 0) {
+                                  return trailerLayout(itemSnapShot.data);
+                                } else {
+                                  return noTrailer(itemSnapShot.data);
+                                }
+                              } else {
+                                return Center(
+                                    child: CircularProgressIndicator());
+                              }
+                            },
+                          );
+                        } else {
+                          return Center(child: CircularProgressIndicator());
+                        }
+                      }),
                   Row(
                     children: <Widget>[
                       Icon(
@@ -105,6 +145,51 @@ class MovieDetailState extends State<MovieDetail> {
                 ],
               ),
             )),
+      ),
+    );
+  }
+
+  Widget noTrailer(data) {
+    return Center(
+      child: Container(
+        child: Text('No Trailer available'),
+      ),
+    );
+  }
+
+  Widget trailerLayout(data) {
+    if (data.results.length > 1) {
+      return Row(
+        children: <Widget>[
+          trailerItem(data, 0),
+          trailerItem(data, 1),
+        ],
+      );
+    } else {
+      return Row(
+        children: <Widget>[trailerItem(data, 0)],
+      );
+    }
+  }
+
+  Widget trailerItem(TrailerModel data, index) {
+    return Expanded(
+      child: Column(
+        children: <Widget>[
+          Container(
+            margin: EdgeInsets.all(5.0),
+            height: 100.0,
+            color: Colors.grey,
+            child: Center(
+              child: Icon(Icons.play_circle_filled),
+            ),
+          ),
+          Text(
+            data.results[index].name,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+        ],
       ),
     );
   }

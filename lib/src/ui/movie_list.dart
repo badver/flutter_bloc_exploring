@@ -1,3 +1,4 @@
+import 'package:bloc_study/src/blocs/movie_detail_bloc_provider.dart';
 import 'package:bloc_study/src/models/item_model.dart';
 import 'package:bloc_study/src/ui/movie_detail.dart';
 import 'package:flutter/material.dart';
@@ -67,18 +68,15 @@ class MovieListState extends State<MovieList> {
 
   _openDetailPage(ItemModel data, int index) {
     Navigator.push(context, MaterialPageRoute(builder: (context) {
-      return MovieDetail(
+      return MovieDetailBlocProvider(
+          child: MovieDetail(
         title: data.results[index].title,
         posterUrl: data.results[index].backdropPath,
         description: data.results[index].overview,
         releaseDate: data.results[index].releaseDate,
         voteAverage: data.results[index].voteAverage.toString(),
         movieId: data.results[index].id,
-      );
+      ));
     }));
   }
 }
-
-//class MovieList extends StatelessWidget {
-
-//}
